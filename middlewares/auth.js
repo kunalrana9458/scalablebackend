@@ -1,10 +1,12 @@
 const jwt = require('jsonwebtoken')
+require("dotenv").config()
 
 exports.auth = async(req,res,next) => {
     try {
         // extract token 
-        const token = req.body.token || req.cookies.token || req.header("Authorization")?.replace("Bearer ","");
-
+        
+        const token =   req.cookies.token || req.header("Authorization")?.replace("Bearer ","");
+        console.log("Token is:",token)
         // check token fetched successfully or not
         if(!token){
             return res.status(401).json({
@@ -15,6 +17,8 @@ exports.auth = async(req,res,next) => {
         // verify the token 
         try {
             const decode = jwt.verify(token,process.env.JWT_SECRET)
+            console.log("AFTER")
+            console.log("Decode is:",decode)
             req.user = decode
         } catch (error) {
             return res.status(401).json({
@@ -28,6 +32,24 @@ exports.auth = async(req,res,next) => {
             success:false,
             message:"Server Error",
             error:error.message
+        })
+    }
+}
+
+exports.isUser = async(req,res) => {
+    if(req.user.role !== "user"){
+        return res.status(403).json({
+            success:false,
+            message:"Access Denied"
+        })
+    } 
+}
+
+exports.isAdmin = async(req,res) => {
+    if(req.user.role !== "admin"){
+        return res.status(403).json({
+            success:false,
+            message:"Access Denied"
         })
     }
 }

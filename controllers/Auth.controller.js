@@ -13,7 +13,6 @@ const generateToken = (user) => {
     const token = jwt.sign(payload,process.env.JWT_SECRET,{
         expiresIn:'1d',
     })
-
     return token;
 }
 
@@ -64,6 +63,8 @@ exports.login = async (req,res) => {
         }
          // generate jwt token here
          const token = generateToken(user)
+         console.log("Token is:",token)
+
          //pass jwt token to the cokkie
          const options = {
              expires:new Date(Date.now()+3*24*60*60*1000),
@@ -71,7 +72,7 @@ exports.login = async (req,res) => {
          }
          res.cookie("token",token,options).status(200).json({
              sucess:true,
-             token:"*********** ******** ***********",
+             token,
              message:"Login Successfull"
          })
     } catch (error) {
