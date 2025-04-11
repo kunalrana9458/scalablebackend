@@ -6,6 +6,8 @@ const dbConnect = require('./config/Database')
 const authRoutes = require('./routes/auth.routes')
 const {applySecurity} = require('./middlewares/index')
 const morgan = require('morgan')
+const {PORT} = require("./config/config")
+const logger = require("./utils/logger")
 
 app.use(express.json())
 app.use(cookieParser())
@@ -22,9 +24,8 @@ app.get('/health',(req,res) => {
     res.status(200).json({status:"Server is Healthy"})
 })
 
-const PORT = process.env.PORT || 5000
 
 app.listen(PORT,() => {
-    console.log(`Server is Listening at Port Number: ${PORT}`)
+    logger.info(`Server is started and Listen at Port ${PORT}`)
 })
 

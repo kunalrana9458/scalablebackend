@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const {JWT_SECRET} = require('../config/config')
 require("dotenv").config()
 
 exports.auth = async(req,res,next) => {
@@ -15,7 +16,7 @@ exports.auth = async(req,res,next) => {
         }
         // verify the token 
         try {
-            const decode = jwt.verify(token,process.env.JWT_SECRET)
+            const decode = jwt.verify(token,JWT_SECRET)
             req.user = decode
             console.log("Deocde is:",decode)
         } catch (error) {
