@@ -8,7 +8,8 @@ const generateToken = (user) => {
     // creation of payload for the jwt token
     const payload = {
         email:user.email,
-        id:user._id
+        id:user._id,
+        role:user.accountType,
     }
     const token = jwt.sign(payload,process.env.JWT_SECRET,{
         expiresIn:'1d',

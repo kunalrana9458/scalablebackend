@@ -9,7 +9,21 @@ router.post('/profile',auth,(req,res) => {
     console.log("This is protected route")
     return res.status(200).json({
         success:true,
-        message:"This is a protected route"
+        message:`Welcome ${req.user.email}`
+    })
+})
+// admin protected route
+router.post('/admin-protected',auth,isAdmin,(req,res) => {
+    return res.status(200).json({
+        success:true,
+        message:"Protected route for admin"
+    })
+})
+// user protected route
+router.post("/user-protected",auth,isUser,(req,res) => {
+    return res.status(200).json({
+        success:true,
+        message:"Protected route for admin"
     })
 })
 
