@@ -8,12 +8,14 @@ const {applySecurity} = require('./middlewares/index')
 const morgan = require('morgan')
 const {PORT} = require("./config/config")
 const logger = require("./utils/logger")
+const profileRouter = require('./routes/profile.routes')
 
 app.use(express.json())
 app.use(cookieParser())
 applySecurity(app)
 app.use(morgan('dev'))
 app.use('/api/v1/auth',authRoutes)
+app.use('/api/v1/profile',profileRouter)
 dbConnect();
 
 app.get('/api/test',(req,res) => {
