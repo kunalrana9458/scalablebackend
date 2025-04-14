@@ -9,6 +9,7 @@ const morgan = require('morgan')
 const {PORT} = require("./config/config")
 const logger = require("./utils/logger")
 const profileRouter = require('./routes/profile.routes')
+const healthRoute = require('./routes/health.route')
 
 app.use(express.json())
 app.use(cookieParser())
@@ -22,9 +23,7 @@ app.get('/api/test',(req,res) => {
     res.send('Security middlware are working properly !')
 })
 
-app.get('/health',(req,res) => {
-    res.status(200).json({status:"Server is Healthy"})
-})
+app.use('/api/v1',healthRoute)
 
 
 app.listen(PORT,() => {

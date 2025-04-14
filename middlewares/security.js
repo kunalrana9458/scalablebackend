@@ -7,7 +7,7 @@ const applySecurity = (app) => {
     app.use(cors())
     app.use(rateLimit({
         windowMs:15*30*1000,
-        max:6,
+        max:10,
         message:"Too many requests, please Try again later"
     }))
 }
