@@ -1,4 +1,4 @@
-const redis = require('../config/redis')  // assuming redis instance is set up in this file
+const redis = require('../config/redis')  // redis connection is done in that file 
 
 const cacheMiddleware = async (req, res, next) => {
     const userId = req.params.id.trim();
