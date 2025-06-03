@@ -2,6 +2,7 @@ const {User} = require('../models/index')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const {JWT_SECRET} = require('../config/config')
+const ApiResponse = require('../utils/ApiResponse')
 
 require('dotenv').config()
 
@@ -31,10 +32,8 @@ exports.register = async(req,res) => {
         }
         // creation of user and save its entry into the database
         const user = await User.create({name,email,password})
-        return res.status(201).json({
-            success:true,
-            message:"User Created Successfully",
-        })
+        const response = new ApiResponse(200,"User Created Successfully")
+        return res.status(response.statusCode).json(response)
     } catch (err) {   
         return res.status(500).json({
             message:'Server Error',
